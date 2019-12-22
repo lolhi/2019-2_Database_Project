@@ -286,15 +286,15 @@
 				</tr>
 				<tr>
 					<td>아이디</td>
-					<td><input type="text" name="id" value=<%=sId%> /></td>
+					<td><input type="text" name="id" value=<%=sId%> readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<td>비밀번호</td>
-					<td><input type="password" name="pw" value=<%=sPassword%> /></td>
+					<td><input type="password" name="pw" value=<%=sPassword%> readonly="readonly" /></td>
 				</tr>
 				<tr>
 					<td>사용자 타입</td>
-					<td><input name=userType type=text value=<%=sUserType%> /></td>
+					<td><input name=userType type=text value=<%=sUserType%> readonly="readonly" /></td>
 				</tr>
 
 				<%

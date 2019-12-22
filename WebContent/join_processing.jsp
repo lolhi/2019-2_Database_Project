@@ -77,7 +77,6 @@
 				e.printStackTrace();
 			}
 		}
-		// SELECT AES_DECRYPT(UNHEX(password), SHA2('password', 512)) FROM magicstore;
 	%>
 	<div align="center">
 		<p>회원가입이 성공적으로 완료되었습니다.</p>

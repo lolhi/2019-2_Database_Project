@@ -1,7 +1,9 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <!DOCTYPE html>
-<% request.setCharacterEncoding("UTF-8"); %>
+<% 
+	request.setCharacterEncoding("UTF-8"); 
+%>
 <html>
 <head>
 <meta charset="UTF-8">
@@ -45,7 +47,7 @@
 <script type="text/javascript">
 
 	function setDropdownMenu(str){
-		document.getElementById("userType").value = str;
+		document.getElementsByName("userType")[0].value = str;
 	}
 	
 	function loginCheck(){
@@ -67,6 +69,20 @@
 	}
 </script>
 <body>
+<%
+	try{
+		if(session.getAttribute("id")!=null){
+			response.sendRedirect("login_main.jsp");
+		} 
+		else{
+			System.out.println("id is null");
+		}
+	}
+	catch(NullPointerException e){
+		//e.printStackTrace();
+		System.out.println("NullPointerException: id is null");
+	}
+%>
 <div align="center">
 	<div>
 		<h1>플레임 왕국 마법 관리 체계에 오신것을 환영합니다.</h1>
@@ -80,7 +96,7 @@
 				<td>사용자타입</td>
 				<td>
 					<div class="dropdown">
-						<input class="dropbtn" id=userType type=text value="사용자 타입" readonly="readonly"/>
+						<input class="dropbtn" name="userType" type="text" value="사용자 타입" readonly="readonly"/>
   						<div class="dropdown-content">
     						<a href='javascript:void(0);' onclick="setDropdownMenu('마법사');">마법사</a>
     						<a href='javascript:void(0);' onclick="setDropdownMenu('마법상회');">마법상회</a>

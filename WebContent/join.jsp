@@ -139,9 +139,8 @@
 				<tr>
 					<td colspan="2">
 						<div align="center">
-							<input type="button" value="취소"
-								onClick="javascript:location.href='main.jsp'" /> <input
-								type="button" value="다음" onClick="CheckJoinBasic()" />
+							<input type="button" value="취소" onClick="javascript:location.href='main.jsp'" /> 
+							<input type="button" value="다음" onClick="CheckJoinBasic()" />
 						</div>
 					</td>
 				</tr>
