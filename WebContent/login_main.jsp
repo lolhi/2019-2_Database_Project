@@ -8,8 +8,11 @@
 	pageEncoding="UTF-8"%>
 <%@page import="Database.DatabaseConnection"%>
 <%@page import="Database.MagicianInfomation"%>
+<%@page import="Database.MagicInfomation"%>
 <%@page import="Database.MagicStoreInfomation"%>
 <%@page import="Database.CustomerInfomation"%>
+
+<%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.Statement"%>
 <%@page import="java.sql.ResultSet"%>
 <!DOCTYPE html>
@@ -21,6 +24,12 @@
 <meta charset="UTF-8">
 <title>마법 관리 체계</title>
 </head>
+<script type="text/javascript">
+	function check(obj){
+		document.manage_magic.magic_idx.value = obj;
+		document.manage_magic.submit();
+	}
+</script>
 <body>
 	<div align="center">
 		<%
@@ -42,11 +51,12 @@
 			}
 
 			DatabaseConnection mDBConn = null;
+			Statement mStmt = null;
 			ResultSet mRs = null;
+			String sQuery = "";
 			try {
 				mDBConn = new DatabaseConnection();
-				Statement mStmt = mDBConn.getStmt();
-				String sQuery = "";
+				mStmt = mDBConn.getStmt();
 		%>
 		<div>
 			<table>
@@ -283,6 +293,88 @@
 				%>
 			</table>
 		</form>
+		<hr>
+		<%
+			try{
+				if (sUserType.equals("마법사")) {
+					ArrayList<MagicInfomation> mMagicInfoList = new ArrayList<MagicInfomation>();
+					mDBConn = new DatabaseConnection();
+					mStmt = mDBConn.getStmt();
+					sQuery = "SELECT name, descrb, class, property, type, effective, consumption, price FROM magic WHERE magicianID='"+ sId +"'";
+					
+					mRs = mStmt.executeQuery(sQuery);
+					
+					while(mRs.next()){
+						mMagicInfoList.add(new MagicInfomation(
+								mRs.getString("name"),
+								mRs.getString("descrb"),
+								mRs.getInt("class"),
+								mRs.getString("property"),
+								mRs.getString("type"),
+								mRs.getInt("effective"),
+								mRs.getInt("consumption"),
+								mRs.getInt("price")
+								));
+					}
+		%>
+				<form name="manage_magic" action="manage_magic.jsp" method="post">
+					<table>
+						<tr>
+							<td align="left" colspan="4"><h3>내가 창조한 마법</h3></td>
+							<td align="right"><input type="text" name="search" placeholder="검색어를 입력하세요." /></td>
+							<td align="right"><input type="submit" name="btn" value="검색" /></td>
+							<td align="right" ><input type="submit" name="btn" value="새로운 마법 등록" /></td>
+							<td align="right"><input type="submit" name="btn" value="새로운 재료 등록" /></td>
+						</tr>
+		<%		
+					if(mMagicInfoList.size() == 0){
+		%>
+						<tr>
+							<td align="center" colspan="6"><h4>창조한 마법이 존재하지 않습니다.</h4></td>
+						</tr>
+		<%				
+					}
+					else{
+		%>			
+						<tr>
+							<td>이름</td>
+							<td>설명</td>
+							<td>클래스</td>
+							<td>속성</td>
+							<td>종류</td>
+							<td>효과량</td>
+							<td>마나소비량</td>
+							<td>가격</td>
+							<td><input type="text" name="magic_idx" style="display:none"></td>
+						</tr>	
+		<%
+						for(int i = 0; i < mMagicInfoList.size(); i++){
+		%>
+						<tr>
+							<td><input type="text" name="magic_name" value="<%=mMagicInfoList.get(i).getsName() %>" readonly="readonly"></td>
+							<td><input type="text" name="magic_descrb" value="<%=mMagicInfoList.get(i).getsDescribe() %>" readonly="readonly"></td>
+							<td><input type="text" name="magic_class" value="<%=mMagicInfoList.get(i).getiClass() %>" readonly="readonly"></td>
+							<td><input type="text" name="magic_property" value="<%=mMagicInfoList.get(i).getsProperty() %>" readonly="readonly"></td>
+							<td><input type="text" name="magic_type" value="<%=mMagicInfoList.get(i).getsType() %>" readonly="readonly"></td>
+							<td><input type="text" name="magic_effective" value="<%=mMagicInfoList.get(i).getiEffective() %>" readonly="readonly"></td>
+							<td><input type="text" name="magic_consumption" value="<%=mMagicInfoList.get(i).getiConsumption() %>" readonly="readonly"></td>
+							<td><input type="text" name="magic_price" value="<%=mMagicInfoList.get(i).getiPrice() %>" readonly="readonly"></td>
+							<td><input type="button" id="btn" value="수정" onclick="check(this.parentElement.parentElement.cells[9].children[0].value)"/></td>
+							<td><input type="text" name="magic_i" style="display:none"value="<%=i %>"></td>
+						</tr>
+		<%					
+						}
+					}
+		%>			
+					</table>
+				</form>
+		<%
+				}
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		%>
+		
 	</div>
 </body>
 </html>
