@@ -18,6 +18,35 @@ public class MagicianInfomation {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public MagicianInfomation(String sId, String sName, int sAge, String sSpecies, String sBirth,
+			String sJob, int sClass, String sProperty, int sMana) {
+		super();
+		this.sId = sId;
+		this.sName = sName;
+		this.sAge = sAge;
+		this.sSpecies = sSpecies;
+		this.sBirth = sBirth;
+		this.sJob = sJob;
+		this.sClass = sClass;
+		this.sProperty = sProperty;
+		this.sMana = sMana;
+	}
+	
+	public MagicianInfomation(String sId, String sName, int sAge, String sSpecies, String sBirth,
+			String sJob, int sClass, String sProperty, int sMana, String sMagicStore) {
+		super();
+		this.sId = sId;
+		this.sName = sName;
+		this.sAge = sAge;
+		this.sSpecies = sSpecies;
+		this.sBirth = sBirth;
+		this.sJob = sJob;
+		this.sClass = sClass;
+		this.sProperty = sProperty;
+		this.sMana = sMana;
+		this.sMagicStore = sMagicStore;
+	}
 
 	public MagicianInfomation(String sId, String sPassword, String sName, int sAge, String sSpecies, String sBirth,
 			String sJob, int sClass, String sProperty, int sMana, double sMoney, String sMagicStore) {
