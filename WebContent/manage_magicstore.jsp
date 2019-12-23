@@ -56,7 +56,10 @@ function check1(obj, obj2) {
 				String sIdx = request.getParameter("magic_idx");
 				String sMode = request.getParameter("magic_mode");
 				String[] sMagicianId = request.getParameterValues("magician_id");
-				System.out.println("sMOde:"+sMode);
+				String[] sMagicianClass = request.getParameterValues("magician_class");
+				String sStoreMaxClass = request.getParameter("magicstore_maxClass");
+				System.out.println("sMOde:"+sMagicianClass[Integer.parseInt(sIdx)]);
+				System.out.println("sMOde:"+sStoreMaxClass);
 				for (int i = 0; i < sMagicianId.length; i++) {
 					System.out.println(sIdx);
 				}
@@ -66,7 +69,15 @@ function check1(obj, obj2) {
 							+ sMagicianId[Integer.parseInt(sIdx)] + "';";
 				} 
 				else if (sMode.equals("등록")) {
-
+					if(Integer.parseInt(sMagicianClass[Integer.parseInt(sIdx)]) > Integer.parseInt(sStoreMaxClass)){
+	%>
+		<script type="text/javascript">
+			alert("등록하려는 마법사의 클래스가 거래하거된 클래스 보다 높습니다.");
+			window.location.href = 'http://localhost:8080/DBproject/login_main.jsp';
+		</script>
+	<%					
+						return;
+					}
 					sQuery = "UPDATE magician " + "SET magicstroreID='" + sId + "' " + "WHERE ID='"
 							+ sMagicianId[Integer.parseInt(sIdx)] + "';";
 				}

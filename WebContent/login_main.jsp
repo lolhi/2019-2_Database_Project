@@ -14,6 +14,8 @@
 <%@page import="Database.CustomerInfomation"%>
 <%@page import="Database.MaterialInfomation"%>
 <%@page import="Database.SalesInfomation"%>
+<%@page import="Database.ExecuteInfomation"%>
+
 
 <%@page import="java.util.ArrayList"%>
 <%@page import="java.sql.Statement"%>
@@ -29,6 +31,9 @@
 <title>마법 관리 체계</title>
 </head>
 <script type="text/javascript">
+	function redirect(type){
+		location.href="detail.jsp?sId=" + document.infomation_update.info_magicstoreid.value +"&type=" + type;
+	}
 	function check(obj) {
 		document.manage_magic.magic_idx.value = obj;
 		document.manage_magic.submit();
@@ -61,7 +66,7 @@
 		<%
 			return;
 			}
-
+			MagicStoreInfomation mMagicStoreInfo = null;
 			DatabaseConnection mDBConn = null;
 			Statement mStmt = null;
 			ResultSet mRs = null;
@@ -92,6 +97,7 @@
 				</tr>
 
 				<%
+				
 					if (sUserType.equals("마법사")) {
 							// 로그인 유저타입이 마법사 일때 표시
 							MagicianInfomation mMagicianInfo = null;
@@ -124,7 +130,10 @@
 					<td style="display: none">password</td>
 					<td><input type="password" name="info_password"
 						value=<%=mMagicianInfo.getsPassword()%> readonly="readonly"
-						style="display: none" /></td>
+						style="display:none" /></td>
+					<td><input type="text" name="info_magicstoreid"
+						value=<%=mMagicianInfo.getsMagicStore()%> readonly="readonly"
+						style="display:none" /></td>
 				</tr>
 				<tr>
 					<td>이름</td>
@@ -164,12 +173,13 @@
 						value=<%=mMagicianInfo.getsMoney()%> readonly="readonly" /></td>
 					<td>소속 마법 상회</td>
 					<td><input type="text" name="info_magicstoreID"
-						value=<%=sStoreName%> readonly="readonly" /></td>
+						value=<%=sStoreName%> readonly="readonly" 
+						onclick="redirect('마법상회')" /></td>
 				</tr>
 				<%
 					} else if (sUserType.equals("마법상회")) {
 							// 로그인 유저타입이 마법상회 일때 표시
-							MagicStoreInfomation mMagicStoreInfo = null;
+							
 							sQuery = "SELECT * FROM magicstore WHERE ID='" + sId + "';";
 
 							mRs = mStmt.executeQuery(sQuery);
@@ -291,6 +301,27 @@
 								mRs.getInt("class"), mRs.getString("property"), mRs.getString("type"),
 								mRs.getInt("effective"), mRs.getInt("consumption"), mRs.getInt("price")));
 					}
+					
+					mRs.close();
+					ArrayList<ArrayList<ExecuteInfomation>> mExcuteInfoList = new ArrayList<ArrayList<ExecuteInfomation>>();
+					
+					for(i = 0; i < mMagicInfoList.size(); i++){
+						sQuery = "SELECT * "
+								+ "FROM execute "
+								+ "WHERE magicName='" + mMagicInfoList.get(i).getsName() + "'";
+						
+						mRs = mStmt.executeQuery(sQuery);
+						ArrayList<ExecuteInfomation> mExcuteInfo = new ArrayList<ExecuteInfomation>();
+						while(mRs.next()){
+							mExcuteInfo.add(new ExecuteInfomation(
+											mRs.getString("magicname"),
+											mRs.getString("meterialName"),
+											mRs.getInt("requirevalue")
+									));
+						}
+						mExcuteInfoList.add(mExcuteInfo);
+					}
+							
 		%>
 		<form name="manage_magic" action="manage_magic.jsp" method="post">
 			<table>
@@ -322,6 +353,7 @@
 					<td>효과량</td>
 					<td>마나소비량</td>
 					<td>가격</td>
+					<td>필요재료</td>
 					<td><input type="text" name="magic_idx" style="display: none"></td>
 				</tr>
 				<%
@@ -350,8 +382,19 @@
 					<td><input type="text" name="magic_price"
 						value="<%=mMagicInfoList.get(i).getiPrice()%>"
 						readonly="readonly"></td>
+					<%
+						String temp = "";
+						for(j=0; j < mExcuteInfoList.get(i).size(); j++){
+							temp += mExcuteInfoList.get(i).get(j).getsMaterialName();
+							if(j != mExcuteInfoList.get(i).size() - 1)
+								temp += ", ";
+						}
+					%>
+					<td><input type="text" name="magic_material"
+						value="<%=temp%>"
+						readonly="readonly"></td>
 					<td><input type="button" id="btn" value="수정"
-						onclick="check(this.parentElement.parentElement.cells[9].children[0].value)" /></td>
+						onclick="check(this.parentElement.parentElement.cells[10].children[0].value)" /></td>
 					<td><input type="text" name="magic_i" style="display: none"
 						value="<%=i%>"></td>
 				</tr>
@@ -416,6 +459,8 @@
 					<td align="right"><input type="submit" name="sbtn" value="삭제검색" /></td>
 					<td><input type="text" name="magic_idx" style="display: none"></td>
 					<td><input type="text" name="magic_mode" style="display: none"></td>
+					<td><input type="text" name="magicstore_maxClass" style="display: none"
+						value="<%=mMagicStoreInfo.getiMaxClass()%>" readonly="readonly"></td>
 
 				</tr>
 				<%
@@ -689,6 +734,9 @@
 						e.printStackTrace();
 					}
 				}
+			}
+			else if (sUserType.equals("소비자")){
+				
 			}
 		%>
 		

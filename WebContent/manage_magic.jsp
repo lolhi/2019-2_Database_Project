@@ -61,6 +61,11 @@
 </style>
 </head>
 <script type="text/javascript">
+	function check(obj) {
+		document.manage_magic.magic_idx.value = obj;
+		document.manage_magic.submit();
+	}
+	
 	function onlyNumber(event) {
 		event = event || window.event;
 		var keyID = (event.which) ? event.which : event.keyCode;
@@ -716,7 +721,7 @@
 				<tr>
 					<td>이름</td>
 					<td><input type="text" name="magic_name" value="<%=sMagicName[Integer.parseInt(sIdx)] %>"/></td>
-					<td><input type="text" name="magic_name_pre" value="<%=sMagicName[Integer.parseInt(sIdx)] %>"/></td>
+					<td><input type="text" name="magic_name_pre" value="<%=sMagicName[Integer.parseInt(sIdx)] %>" style="display:none"/></td>
 				</tr>
 				<tr>
 					<td>설명</td>
@@ -724,7 +729,7 @@
 				</tr>
 				<tr>
 					<td>클래스</td>
-					<td><input type="text" name="magic_class" value="<%=Integer.parseInt(sMagicEffective[Integer.parseInt(sIdx)]) %>"
+					<td><input type="text" name="magic_class" value="<%=Integer.parseInt(sMagicClass[Integer.parseInt(sIdx)]) %>"
 						onkeydown="onlyNumber(event)" onkeyup='removeChar5(event)' /></td>
 				</tr>
 				<tr>
@@ -916,7 +921,7 @@
 						+ "FROM magic "
 						+ "WHERE magicianID='"+ sId +"' AND name LIKE'%" + request.getParameter("search") + "%'"
 						+ " OR descrb LIKE'%" + request.getParameter("search") + "%' OR property LIKE'%" + request.getParameter("search") + "%'"
-						+ " OR type LIKE'%" + request.getParameter("search") + "%';";
+						+ " OR type LIKE'%" + request.getParameter("search") + "%' OR class='"+ request.getParameter("search") +"';";
 				
 				mRs = mStmt.executeQuery(sQuery);
 				
@@ -933,6 +938,7 @@
 							));
 				}
 		%>
+		<form name="manage_magic" action="manage_magic.jsp" method="post">
 				<table>
 						<tr>
 							<td align="left" colspan="4"><h3>검색결과</h3></td>
@@ -978,6 +984,7 @@
 					}
 		%>			
 					</table>
+					</form>
 		<%
 				} catch (Exception e) {
 					e.printStackTrace();

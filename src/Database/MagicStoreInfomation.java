@@ -13,6 +13,16 @@ public class MagicStoreInfomation {
 		super();
 		// TODO Auto-generated constructor stub
 	}
+	
+	public MagicStoreInfomation(String sStoreName, String sAddress,
+			String sRepresentative, int iMaxClass, double dMoney) {
+		super();
+		this.sStoreName = sStoreName;
+		this.sAddress = sAddress;
+		this.sRepresentative = sRepresentative;
+		this.iMaxClass = iMaxClass;
+		this.dMoney = dMoney;
+	}
 
 	public MagicStoreInfomation(String sId, String sPassword, String sStoreName, String sAddress,
 			String sRepresentative, int iMaxClass, double dMoney) {
