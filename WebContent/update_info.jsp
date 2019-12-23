@@ -348,6 +348,10 @@
 					<td>이름</td>
 					<td><input type="text" name="name" value=<%=mMagicianInfo.getsName() %>/></td>
 				</tr>
+				<script>
+						document.update_info.name.value = document.update_info.name.value
+								.replace('/', '');
+				</script>
 				<tr>
 					<td>나이</td>
 					<td><input type="text" name="age" value=<%=mMagicianInfo.getsAge() %>
@@ -378,10 +382,18 @@
 					<td>출신지</td>
 					<td><input type="text" name="birth" value=<%=mMagicianInfo.getsBirth() %> /></td>
 				</tr>
+				<script>
+						document.update_info.birth.value = document.update_info.birth.value
+								.replace('/', '');
+				</script>
 				<tr>
 					<td>직업</td>
 					<td><input type="text" name="job"  value=<%=mMagicianInfo.getsJob() %>/></td>
 				</tr>
+				<script>
+						document.update_info.job.value = document.update_info.job.value
+								.replace('/', '');
+				</script>
 				<tr>
 					<td>클래스</td>
 					<td><input type="text" name="userClass" value=<%=mMagicianInfo.getsClass() %>
@@ -431,14 +443,26 @@
 					<td>상호명</td>
 					<td><input type="text" name="storename" value=<%=mMagicStoreInfo.getsStoreName() %>/></td>
 				</tr>
+				<script>
+						document.update_info.storename.value = document.update_info.storename.value
+								.replace('/', '');
+				</script>
 				<tr>
 					<td>주소</td>
 					<td><input type="text" name="address" value=<%=mMagicStoreInfo.getsAddress() %>/></td>
 				</tr>
+				<script>
+						document.update_info.address.value = document.update_info.address.value
+								.replace('/', '');
+				</script>
 				<tr>
 					<td>대표자 이름</td>
 					<td><input type="text" name="representative" value=<%=mMagicStoreInfo.getsRepresentative() %>/></td>
 				</tr>
+				<script>
+						document.update_info.representative.value = document.update_info.representative.value
+								.replace('/', '');
+				</script>
 				<tr>
 					<td>거래 허가 클래스</td>
 					<td><input type="text" name="maxClass" value=<%=mMagicStoreInfo.getiMaxClass() %>
@@ -460,6 +484,10 @@
 					<td>이름</td>
 					<td><input type="text" name="name1" value=<%=mCustomerInfo.getsName()%>/></td>
 				</tr>
+				<script>
+						document.update_info.name1.value = document.update_info.name1.value
+								.replace('/', '');
+				</script>
 				<tr>
 					<td>나이</td>
 					<td><input type="text" name="age1" value=<%=mCustomerInfo.getiAge()%>
@@ -469,6 +497,10 @@
 					<td>주소</td>
 					<td><input type="text" name="address1" value=<%=mCustomerInfo.getsAddress()%>/></td>
 				</tr>
+				<script>
+						document.update_info.address1.value = document.update_info.address1.value
+								.replace('/', '');
+				</script>
 				<tr>
 					<td>속성</td>
 					<td>
